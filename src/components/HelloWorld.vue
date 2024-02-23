@@ -5,6 +5,7 @@ defineProps({
     required: true
   }
 })
+console.log('hello world refresh')
 </script>
 
 <template>
@@ -14,6 +15,8 @@ defineProps({
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
+      <label for="">hello world component</label>
+      <input type="text" />
     </h3>
   </div>
 </template>

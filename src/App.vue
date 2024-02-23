@@ -1,15 +1,35 @@
 <script setup>
+import { nextTick, ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+// view router refresh
+import { useGlobalStore } from './stores/store'
+const globalStore = useGlobalStore()
+const refresh = () => {
+  useGlobalStore().routeKey++
+}
+
+//v-if refresh
+const showHelloWorld = ref(true)
+const vIfRefresh = () => {
+  showHelloWorld.value = false
+  nextTick(() => {
+    showHelloWorld.value = true
+  })
+}
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+      <div class="button-group">
+        <button @click="refresh()">use key refresh router view</button>
+        <button @click="vIfRefresh()" style="margin-left: 20px">
+          use v-if refresh hello world component
+        </button>
+      </div>
+      <HelloWorld v-if="showHelloWorld" msg="You did it!" />
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -17,10 +37,13 @@ import HelloWorld from './components/HelloWorld.vue'
     </div>
   </header>
 
-  <RouterView />
+  <RouterView :key="globalStore.routeKey" />
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.button-group {
+  display: flex;
+}
 header {
   line-height: 1.5;
   max-height: 100vh;
